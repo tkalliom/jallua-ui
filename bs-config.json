@@ -1,0 +1,4 @@
+{
+  "server": "./dist",
+  "files": ["./dist/*.*", "./dist/scripts/*.js", "./dist/vendor/*.js"]
+}

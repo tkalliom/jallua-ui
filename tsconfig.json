@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+
+    "outDir": "./scripts",
+
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true
+  },
+  "include": ["app/*.ts"],
+  "angularCompilerOptions": {
+    "skipMetadataEmit": true
+  }
+}
