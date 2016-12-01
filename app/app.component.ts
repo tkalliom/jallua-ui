@@ -1,5 +1,8 @@
 import { Component, OnInit } from "@angular/core";
+import { Subject }  from "rxjs/Subject";
+import "rxjs/add/operator/debounceTime";
 
+import { Location } from "./location";
 import { Store } from "./store";
 import { StoreService } from "./store.service";
 
@@ -9,9 +12,11 @@ import { StoreService } from "./store.service";
   providers: [StoreService],
   template: `
     <h1>{{title}}</h1>
+    <h2>Location selection</h2>
+    <sebm-google-map [latitude]="location.lat" [longitude]="location.lng" (centerChange)="mapCenters.next({lat: $event.lat, lng: $event.lng})"></sebm-google-map>
     <h2>Stores</h2>
     <ul class="item-listing">
-      <li *ngFor="let store of stores"
+      <li *ngFor="let store of nearbyStores"
        (click)="onSelect(store)"
        [class.selected]="store === selectedStore">
         {{store.storeNumber}}: {{store.streetAddress}}, {{store.postOffice}}
@@ -20,6 +25,9 @@ import { StoreService } from "./store.service";
     <my-store-detail [store]="selectedStore"></my-store-detail>
     `,
   styles: [`
+    .sebm-google-map-container {
+      height: 300px;
+    }
     ul {
       list-style-type: none;
       padding: 0;
@@ -55,17 +63,31 @@ import { StoreService } from "./store.service";
 })
 export class AppComponent implements OnInit {
   title = "Jallua UI";
-  stores: Store[];
+
+  location = new Location(61.4491, 23.8603);
+
+  mapCenters = new Subject<Location>();
+
+  allStores: Store[];
+  nearbyStoreIds: string[];
+  nearbyStores: Store[];
   selectedStore: Store;
 
-  constructor(private storeService: StoreService) { }
+  constructor(private storeService: StoreService) {
+    this.mapCenters.debounceTime(500).subscribe(location => this.refreshPosition(location));
+  }
 
-  getStores(): void {
-    this.storeService.getStores().then(stores => this.stores = stores);
+  refreshPosition(location: Location) {
+    this.storeService.getStoreIdsByLocation(location)
+      .then(storeIds => {
+        const shortlist = storeIds.slice(0, 5);
+        this.nearbyStores = this.allStores.filter(store => shortlist.indexOf(store.storeNumber) !== -1);
+    });
   }
 
   ngOnInit(): void {
-    this.getStores();
+    this.storeService.getStores().then(stores => this.allStores = stores);
+    this.refreshPosition(this.location);
   }
 
   onSelect(store: Store): void {
