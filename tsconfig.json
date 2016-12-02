@@ -13,8 +13,9 @@
     "noImplicitThis": true,
     "noUnusedLocals": true
   },
-  "include": ["app/*.ts"],
+  "include": ["app/*.ts", "factories/app/*.ts"],
   "angularCompilerOptions": {
-    "skipMetadataEmit": true
+    "skipMetadataEmit": true,
+    "genDir": "./factories"
   }
 }

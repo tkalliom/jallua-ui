@@ -2,7 +2,7 @@
   "name": "jallua-ui",
   "version": "1.0.0",
   "scripts": {
-    "clean": "rm -rf app/*.ngfactory.ts && rm -rf scripts && rm -rf dist/scripts",
+    "clean": "rm -rf factories && rm -rf scripts && rm -rf dist/scripts",
     "ngc": "ngc",
     "build": "tsc",
     "rollup": "rollup -c -i bootstrap.js -o dist/scripts/bundle.js -c ",
