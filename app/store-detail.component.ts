@@ -6,7 +6,7 @@ import { Store } from "./store";
   selector: "my-store-detail",
   template: `
     <div *ngIf="store">
-      <h2>{{store.name}} details!</h2>
+      <h2>Store details</h2>
       <dl>
           <dt>id</dt><dd>{{store.storeNumber}}</dd>
           <dt>address</dt><dd>{{store.streetAddress}}</dd>

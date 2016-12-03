@@ -11,53 +11,20 @@ import { StoreService } from "./store.service";
   selector: "my-app",
   providers: [StoreService],
   template: `
-    <h1>{{title}}</h1>
-    <h2>Location selection</h2>
-    <sebm-google-map [latitude]="location.lat" [longitude]="location.lng" (centerChange)="mapCenters.next({lat: $event.lat, lng: $event.lng})"></sebm-google-map>
-    <h2>Stores</h2>
-    <ul class="item-listing">
-      <li *ngFor="let store of nearbyStores"
-       (click)="onSelect(store)"
-       [class.selected]="store === selectedStore">
-        {{store.storeNumber}}: {{store.streetAddress}}, {{store.postOffice}}
-      </li>
-    </ul>
-    <my-store-detail [store]="selectedStore"></my-store-detail>
+    <sebm-google-map [latitude]="location.lat" [longitude]="location.lng" (centerChange)="mapCenters.next({lat: $event.lat, lng: $event.lng})">
+      <sebm-google-map-marker *ngFor="let store of nearbyStores"
+       [latitude]="store.lat"
+       [longitude]="store.lng"
+       [title]="store.displayName">
+        <sebm-google-map-info-window>
+          <my-store-detail [store]="store"></my-store-detail>
+        </sebm-google-map-info-window>
+      </sebm-google-map-marker> 
+    </sebm-google-map>
     `,
   styles: [`
     .sebm-google-map-container {
-      height: 300px;
-    }
-    ul {
-      list-style-type: none;
-      padding: 0;
-      width: 30em;
-      display: inline-block;
-    }
-    li {
-      cursor: pointer;
-      background-color: #DDD;
-      margin: .5em;
-      padding: .3em;
-      height: 1.5em;
-      border-radius: 4px;
-    }
-    li:hover {
-      color: #607D8B;
-      background-color: #DDD;
-      position: relative;
-      left: .1em;
-    }
-    li.selected {
-      background-color: #BAC2C6;
-      color: white;
-    }
-    li.selected:hover {
-      background-color: #BBD8DC;
-      color: white;
-    }
-    my-store-detail {
-      display: inline-block;
+      height: 100%;
     }
   `]
 })
@@ -71,7 +38,6 @@ export class AppComponent implements OnInit {
   allStores: Store[];
   nearbyStoreIds: string[];
   nearbyStores: Store[];
-  selectedStore: Store;
 
   constructor(private storeService: StoreService) {
     this.mapCenters.debounceTime(500).subscribe(location => this.refreshPosition(location));
@@ -88,9 +54,5 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.storeService.getStores().then(stores => this.allStores = stores);
     this.refreshPosition(this.location);
-  }
-
-  onSelect(store: Store): void {
-    this.selectedStore = store;
   }
 }
