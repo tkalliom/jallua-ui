@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { HttpModule } from "@angular/http";
 
-import { AgmCoreModule } from "angular2-google-maps/esm/core";
+import { AgmCoreModule } from "angular2-google-maps/core";
 
 import { AppComponent } from "./app.component";
 import { StoreDetailComponent } from "./store-detail.component";

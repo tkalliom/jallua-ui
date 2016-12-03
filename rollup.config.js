@@ -1,5 +1,6 @@
 import nodeResolve from 'rollup-plugin-node-resolve';
 import commonJs from 'rollup-plugin-commonjs';
+import uglify from 'rollup-plugin-uglify';
 
 export default {
   entry: 'scripts/app/main.js',
@@ -10,7 +11,8 @@ export default {
     nodeResolve({jsnext: true}),
     commonJs({
       include: ['**/rxjs/**', '**/angular2-google-maps/**']
-    })
+    }),
+    uglify()
   ],
   onwarn: function (message) {
     // As per https://angular.io/docs/ts/latest/cookbook/aot-compiler.html these are safe to ignore

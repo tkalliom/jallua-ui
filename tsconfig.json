@@ -1,9 +1,11 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "es5",
+    "module": "es6",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "lib": ["es2015", "dom"],
 
     "outDir": "./scripts",
 
