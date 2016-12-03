@@ -2,13 +2,13 @@
   "name": "jallua-ui",
   "version": "1.0.0",
   "scripts": {
-    "clean": "rm -rf factories && rm -rf scripts && rm -rf dist/scripts",
-    "ngc": "ngc",
-    "build": "tsc",
-    "rollup": "rollup -c -i bootstrap.js -o dist/scripts/bundle.js -c ",
-    "rollup-dev": "rollup -c -i bootstrap-dev.js -o dist/scripts/bundle.js -c ",
-    "postinstall": "npm run ngc && npm run build && npm run rollup",
-    "start-dev": "npm run clean && npm run build && npm run rollup-dev && concurrently \"tsc -w\" \"rollup -w -c -i bootstrap-dev.js -o dist/scripts/bundle.js\" \"lite-server\""
+    "clean": "rm -rf aot && rm -rf scripts && rm -rf dist/scripts",
+    "build": "ngc",
+    "build-dev": "tsc -p tsconfig-dev.json",
+    "rollup": "rollup -c -o dist/scripts/bundle.js",
+    "rollup-dev": "rollup -c rollup.config.dev.js",
+    "postinstall": "npm run build && npm run rollup",
+    "start-dev": "npm run clean && npm run build-dev && npm run rollup-dev && concurrently \"tsc -w -p tsconfig-dev.json\" \"rollup -w -c rollup.config.dev.js\" \"lite-server\""
   },
   "licences": [
     {

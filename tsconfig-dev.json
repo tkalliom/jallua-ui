@@ -5,7 +5,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
 
-    "outDir": "./scripts",
+    "outDir": "./scripts/app",
 
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
@@ -13,9 +13,5 @@
     "noImplicitThis": true,
     "noUnusedLocals": true
   },
-  "files": ["app/app.module.ts", "app/main.ts"],
-  "angularCompilerOptions": {
-    "skipMetadataEmit": true,
-    "genDir": "./aot"
-  }
+  "files": ["app/main-dev.ts"]
 }
