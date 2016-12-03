@@ -8,7 +8,7 @@ import "rxjs/add/operator/toPromise";
 
 @Injectable()
 export class StoreService {
-  private storesUrl = "/stores";
+  private storesUrl = "http://jallu.herokuapp.com/stores";
 
   constructor(private http: Http) { }
 
@@ -32,6 +32,6 @@ export class StoreService {
   }
 
   private closestStoreIdsUrl(location: Location) {
-    return `/stores/closest?lat=${location.lat}&lng=${location.lng}`;
+    return `http://jallu.herokuapp.com/stores/closest?lat=${location.lat}&lng=${location.lng}`;
   }
 }
