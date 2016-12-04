@@ -52,7 +52,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.storeService.getStores().then(stores => this.allStores = stores);
-    this.refreshPosition(this.location);
+    this.storeService.getStores()
+      .then(stores => this.allStores = stores)
+      .then(() => this.refreshPosition(this.location));
   }
 }
