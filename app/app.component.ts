@@ -46,8 +46,7 @@ export class AppComponent implements OnInit {
   refreshPosition(location: Location) {
     this.storeService.getStoreIdsByLocation(location)
       .then(storeIds => {
-        const shortlist = storeIds.slice(0, 5);
-        this.nearbyStores = this.allStores.filter(store => shortlist.indexOf(store.storeNumber) !== -1);
+        this.nearbyStores = this.allStores.filter(store => storeIds.indexOf(store.storeNumber) !== -1);
     });
   }
 
