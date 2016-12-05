@@ -40,7 +40,6 @@ export class AppComponent implements OnInit {
   nearbyStores: Store[];
 
   constructor(private storeService: StoreService) {
-    this.mapCenters.debounceTime(500).subscribe(location => this.refreshPosition(location));
   }
 
   refreshPosition(location: Location) {
@@ -53,6 +52,9 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.storeService.getStores()
       .then(stores => this.allStores = stores)
-      .then(() => this.refreshPosition(this.location));
+      .then(() => {
+        this.mapCenters.debounceTime(500).subscribe(location => this.refreshPosition(location));
+        this.refreshPosition(this.location);
+      });
   }
 }
